@@ -1,0 +1,92 @@
+{
+  "info": {
+    "name": "Data Quality Checker System",
+    "description": "API collection for the Data Quality Checker System (PHP + MySQL backend).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/health.php"
+      }
+    },
+    {
+      "name": "Get All Issues",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/issues.php"
+      }
+    },
+    {
+      "name": "Get Issue By ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/issues.php?id=1"
+      }
+    },
+    {
+      "name": "Create Issue",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"severity\": \"Warning\",\n  \"rule\": \"Format validation\",\n  \"principle\": \"accuracy\",\n  \"record\": \"Row 5\",\n  \"field\": \"email\",\n  \"detail\": \"Invalid email format\",\n  \"fix\": \"Apply format validation at ingestion.\",\n  \"status\": \"Open\"\n}"
+        },
+        "url": "{{baseUrl}}/issues.php"
+      }
+    },
+    {
+      "name": "Update Issue",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"severity\": \"Critical\",\n  \"rule\": \"Required field\",\n  \"principle\": \"completeness\",\n  \"record\": \"Row 5\",\n  \"field\": \"email\",\n  \"detail\": \"Value is empty\",\n  \"fix\": \"Make email required and reject blank values.\",\n  \"status\": \"Resolved\"\n}"
+        },
+        "url": "{{baseUrl}}/issues.php?id=1"
+      }
+    },
+    {
+      "name": "Delete Issue",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": "{{baseUrl}}/issues.php?id=1"
+      }
+    },
+    {
+      "name": "Check Dataset",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"fileName\": \"sample.json\",\n  \"records\": [\n    {\n      \"id\": \"1\",\n      \"email\": \"user@example.com\",\n      \"name\": \"John Doe\"\n    },\n    {\n      \"id\": \"2\",\n      \"email\": \"\",\n      \"name\": \"Jane Doe\"\n    }\n  ]\n}"
+        },
+        "url": "{{baseUrl}}/check-dataset.php"
+      }
+    }
+  ]
+}

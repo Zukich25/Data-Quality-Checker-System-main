@@ -26,7 +26,7 @@ export default function IssuesPage() {
     try {
       setIssues(await getIssues())
     } catch {
-      setError('Could not load issues. Start Apache + MySQL in Xampp and import backend/database/schema.sql.')
+      setError('Could not load issues. Run docker compose up -d and wait for MySQL to start.')
     } finally {
       setLoading(false)
     }
@@ -41,7 +41,7 @@ export default function IssuesPage() {
       })
       .catch(() => {
         if (active) {
-          setError('Could not load issues. Start Apache + MySQL in Xampp and import backend/database/schema.sql.')
+          setError('Could not load issues. Run docker compose up -d and wait for MySQL to start.')
         }
       })
       .finally(() => {
@@ -74,7 +74,7 @@ export default function IssuesPage() {
       resetForm()
       await loadIssues()
     } catch {
-      setError('Save failed. Check that MySQL is running and the database is set up.')
+      setError('Save failed. Check that Docker containers are running (docker compose up -d).')
     } finally {
       setSaving(false)
     }

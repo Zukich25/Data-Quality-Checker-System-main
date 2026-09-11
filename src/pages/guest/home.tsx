@@ -33,7 +33,7 @@ export default function HomePage() {
         >
           {backendStatus === "checking" && "Checking PHP backend..."}
           {backendStatus === "online" && "PHP Backend: Connected (Axios)"}
-          {backendStatus === "offline" && "PHP Backend: Offline — start Apache in Xampp"}
+          {backendStatus === "offline" && "PHP Backend: Offline — run docker compose up -d"}
         </div>
         <Link
           to="/issues"

@@ -2,10 +2,10 @@
 
 function getDatabaseConnection(): PDO
 {
-    $host = 'localhost';
-    $dbname = 'checker_system';
-    $username = 'root';
-    $password = '';
+    $host = getenv('DB_HOST') ?: 'localhost';
+    $dbname = getenv('DB_NAME') ?: 'checker_system';
+    $username = getenv('DB_USER') ?: 'root';
+    $password = getenv('DB_PASSWORD') ?: '';
 
     $dsn = "mysql:host={$host};dbname={$dbname};charset=utf8mb4";
 
