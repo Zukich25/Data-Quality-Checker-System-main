@@ -1,6 +1,14 @@
 CREATE DATABASE IF NOT EXISTS checker_system;
 USE checker_system;
 
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 CREATE TABLE IF NOT EXISTS issues (
     id INT AUTO_INCREMENT PRIMARY KEY,
     severity ENUM('Critical', 'Warning', 'Info') NOT NULL DEFAULT 'Warning',
@@ -14,6 +22,9 @@ CREATE TABLE IF NOT EXISTS issues (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
+
+INSERT INTO users (name, email, password) VALUES
+('SODA Admin', 'admin@soda.com', 'soda123');
 
 INSERT INTO issues (severity, rule, principle, record, field, detail, fix, status) VALUES
 ('Critical', 'Required field', 'completeness', 'Row 2', 'email', 'Value is empty', 'Make email required and reject blank values.', 'Open'),

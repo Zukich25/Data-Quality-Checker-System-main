@@ -1,10 +1,22 @@
 {
   "info": {
-    "name": "Data Quality Checker System",
-    "description": "API collection for the Data Quality Checker System (PHP + MySQL backend).",
+    "name": "SODA Data Quality Checker System",
+    "description": "API collection for SODA — Data Quality Checker System (PHP + MySQL + Docker).",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"admin@soda.com\",\n  \"password\": \"soda123\"\n}"
+        },
+        "url": "{{baseUrl}}/auth.php"
+      }
+    },
     {
       "name": "Health Check",
       "request": {

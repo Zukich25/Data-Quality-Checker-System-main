@@ -1,87 +1,94 @@
-# Data Quality Checker System
+# SODA — Data Quality Checker System
 
-React + Axios frontend with PHP + MySQL backend, running in **Docker**. API testing with **Postman**.
+Professional data quality investigation platform built with **React + Axios** frontend and **PHP + MySQL** backend, running in **Docker**. API testing with **Postman**.
 
 ## Stack
 
-- **Frontend:** React, TypeScript, Vite, Tailwind CSS, Axios
-- **Backend:** PHP, MySQL
-- **DevOps:** Docker, Docker Compose
-- **API Testing:** Postman
+| Layer | Technology |
+|-------|-----------|
+| Frontend | React, TypeScript, Vite, Tailwind CSS, Axios |
+| Backend | PHP, MySQL |
+| DevOps | Docker, Docker Compose |
+| API Testing | Postman |
 
-## Quick Start (Docker)
+## Quick Start
 
 ### Requirements
-
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+- [Node.js 20+](https://nodejs.org/)
 
-### Run everything
+### Option A — One command (Windows)
+```bat
+start.bat
+```
 
+### Option B — Manual steps
 ```bash
-git clone https://github.com/Zukich25/Data-Quality-Checker-System-main.git
-cd Data-Quality-Checker-System-main
+# 1. Start backend (database + API)
 docker compose up -d --build
-```
 
-Wait ~30 seconds for MySQL to initialize, then open:
+# 2. Wait ~30 seconds for MySQL on first run
 
-| Service | URL |
-|---------|-----|
-| Frontend | http://localhost:5173/ |
-| CRUD page | http://localhost:5173/issues |
-| API health | http://localhost:8080/api/health.php |
-
-### Stop containers
-
-```bash
-docker compose down
-```
-
-## Postman Setup
-
-1. Open **Postman**
-2. Click **Import**
-3. Import both files from the `postman/` folder:
-   - `Data-Quality-Checker-System.postman_collection.json`
-   - `local.postman_environment.json`
-4. Select the **Checker Local (Docker)** environment
-5. Make sure Docker is running (`docker compose up -d`)
-6. Test **Health Check** first, then CRUD endpoints
-
-## Local Development (without Docker frontend)
-
-Run only database + API in Docker:
-
-```bash
-docker compose up -d db api
+# 3. Install & run frontend
 npm install
 npm run dev
 ```
 
-Copy `.env.example` to `.env` if needed.
+### Login credentials
+| Email | Password |
+|-------|----------|
+| admin@soda.com | soda123 |
 
-## Project Structure
+## URLs
+
+| Service | URL |
+|---------|-----|
+| Login | http://localhost:5173/login |
+| Dashboard | http://localhost:5173/ |
+| Issues CRUD | http://localhost:5173/issues |
+| API Health | http://localhost:8080/api/health.php |
+
+## Postman
+
+1. Import files from `postman/` folder
+2. Select **Checker Local (Docker)** environment
+3. Run **Health Check** → **Login** → CRUD endpoints
+
+## Project Structure (Teacher Rubric)
 
 ```
-├── src/                  # React frontend
-├── backend/              # PHP API
-│   ├── api/              # REST endpoints
-│   ├── config/           # Database & CORS
-│   ├── database/         # MySQL schema
-│   └── services/         # Business logic
-├── postman/              # Postman collection & environment
-├── docker-compose.yml
-└── Dockerfile.frontend
+src/
+├── main.tsx
+├── assets/
+├── components/
+│   ├── common/          # page-loading, app-layout, protected-route
+│   ├── features/        # checker, issues feature components
+│   └── ui/              # button, card, input, label, modal, section, tag, textarea
+├── lib/
+│   ├── axios.ts
+│   ├── cn.ts
+│   └── checker/         # utils & constants
+├── pages/
+│   ├── guest/
+│   │   ├── home/index.tsx
+│   │   └── login/index.tsx
+│   └── issues/index.tsx
+└── styles/
+    └── global.css
 ```
 
-## API Endpoints
+## Troubleshooting
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/health.php` | Health check |
-| GET | `/api/issues.php` | Get all issues |
-| GET | `/api/issues.php?id=1` | Get one issue |
-| POST | `/api/issues.php` | Create issue |
-| PUT | `/api/issues.php?id=1` | Update issue |
-| DELETE | `/api/issues.php?id=1` | Delete issue |
-| POST | `/api/check-dataset.php` | Check dataset quality |
+| Problem | Solution |
+|---------|----------|
+| Docker won't start | Open Docker Desktop first, wait until it says "Running" |
+| npm install fails | Install Node.js 20+: `node -v` should show v20+ |
+| CRUD page errors | Run `docker compose down -v` then `docker compose up -d --build` to reset DB |
+| Login fails | Wait 30s after first Docker start for MySQL to initialize |
+| Port 8080 in use | Stop other apps using port 8080 or change port in docker-compose.yml |
+
+## Stop everything
+
+```bash
+docker compose down
+```

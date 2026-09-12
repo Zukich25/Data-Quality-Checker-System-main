@@ -17,6 +17,11 @@ if ($uri === '/api/issues.php' || str_starts_with($uri, '/api/issues')) {
     return true;
 }
 
+if ($uri === '/api/auth.php' || $uri === '/api/auth') {
+    require __DIR__ . '/api/auth.php';
+    return true;
+}
+
 http_response_code(404);
 header('Content-Type: application/json; charset=utf-8');
 echo json_encode([

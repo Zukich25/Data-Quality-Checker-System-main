@@ -1,8 +1,12 @@
 {
-  "name": "checker-system",
+  "name": "soda-checker-system",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
+  "engines": {
+    "node": ">=20.0.0",
+    "npm": ">=10.0.0"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -10,7 +14,8 @@
     "preview": "vite preview",
     "docker:up": "docker compose up -d --build",
     "docker:down": "docker compose down",
-    "docker:logs": "docker compose logs -f"
+    "docker:logs": "docker compose logs -f",
+    "start": "docker compose up -d --build && npm run dev"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

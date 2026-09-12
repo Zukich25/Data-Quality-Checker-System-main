@@ -1,7 +1,7 @@
 services:
   db:
     image: mysql:8.0
-    container_name: checker-db
+    container_name: soda-db
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: root
@@ -9,21 +9,22 @@ services:
       MYSQL_USER: checker
       MYSQL_PASSWORD: checker
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - db_data:/var/lib/mysql
       - ./backend/database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-proot"]
       interval: 5s
-      timeout: 5s
-      retries: 12
+      timeout: 10s
+      retries: 20
+      start_period: 30s
 
   api:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: checker-api
+    container_name: soda-api
     restart: unless-stopped
     ports:
       - "8080:80"
@@ -35,22 +36,12 @@ services:
     depends_on:
       db:
         condition: service_healthy
-
-  frontend:
-    build:
-      context: .
-      dockerfile: Dockerfile.frontend
-    container_name: checker-frontend
-    restart: unless-stopped
-    ports:
-      - "5173:5173"
-    environment:
-      VITE_API_URL: http://localhost:8080/api
-    volumes:
-      - .:/app
-      - /app/node_modules
-    depends_on:
-      - api
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost/api/health.php || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
 
 volumes:
   db_data:
