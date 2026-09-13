@@ -17,18 +17,18 @@ export function IssueForm({ form, saving, editing, onChange, onSubmit, onCancel 
   return (
     <form onSubmit={onSubmit} className="grid gap-4 md:grid-cols-2">
       <div className="space-y-1"><Label>Severity</Label>
-        <select value={form.severity} onChange={(e) => onChange({ ...form, severity: e.target.value as IssueFormData['severity'] })} className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm">
+        <select value={form.severity} onChange={(e) => onChange({ ...form, severity: e.target.value as IssueFormData['severity'] })} className="w-full rounded-lg border border-[#243049] bg-[#0a1020] px-3 py-2 text-sm text-white">
           <option value="Critical">Critical</option><option value="Warning">Warning</option><option value="Info">Info</option>
         </select>
       </div>
       <div className="space-y-1"><Label>Status</Label>
-        <select value={form.status} onChange={(e) => onChange({ ...form, status: e.target.value as IssueFormData['status'] })} className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm">
+        <select value={form.status} onChange={(e) => onChange({ ...form, status: e.target.value as IssueFormData['status'] })} className="w-full rounded-lg border border-[#243049] bg-[#0a1020] px-3 py-2 text-sm text-white">
           <option value="Open">Open</option><option value="Resolved">Resolved</option>
         </select>
       </div>
       <div className="space-y-1"><Label>Rule</Label><Input value={form.rule} onChange={(e) => onChange({ ...form, rule: e.target.value })} required /></div>
       <div className="space-y-1"><Label>Principle</Label>
-        <select value={form.principle} onChange={(e) => onChange({ ...form, principle: e.target.value as IssueFormData['principle'] })} className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm">
+        <select value={form.principle} onChange={(e) => onChange({ ...form, principle: e.target.value as IssueFormData['principle'] })} className="w-full rounded-lg border border-[#243049] bg-[#0a1020] px-3 py-2 text-sm text-white">
           {['accuracy', 'consistency', 'completeness', 'timeliness', 'reliability', 'relevance'].map((p) => <option key={p} value={p}>{p}</option>)}
         </select>
       </div>

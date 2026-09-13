@@ -22,6 +22,11 @@ if ($uri === '/api/auth.php' || $uri === '/api/auth') {
     return true;
 }
 
+if ($uri === '/api/register.php' || $uri === '/api/register') {
+    require __DIR__ . '/api/register.php';
+    return true;
+}
+
 http_response_code(404);
 header('Content-Type: application/json; charset=utf-8');
 echo json_encode([

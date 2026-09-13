@@ -1,55 +1,66 @@
+import { useState } from 'react'
 import { Link, useLocation } from 'react-router'
+import { SodaLogo } from '@/components/common/soda-logo'
 import { useAuth } from '@/contexts/auth-context'
-import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/cn'
 
 const navItems = [
-  { to: '/', label: 'Dashboard' },
-  { to: '/issues', label: 'Issues CRUD' },
+  { to: '/', label: 'Analyzer' },
+  { to: '/issues', label: 'Issues ' },
 ]
 
 export function AppLayout({ children }: { children: React.ReactNode }) {
   const { user, logout } = useAuth()
   const location = useLocation()
+  const [menuOpen, setMenuOpen] = useState(false)
 
   return (
-    <div className="min-h-screen bg-[#f4f7f6]">
-      <header className="sticky top-0 z-40 border-b border-slate-200/80 bg-white/90 backdrop-blur-md">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 md:px-6">
-          <div className="flex items-center gap-6">
-            <Link to="/" className="flex items-center gap-2.5">
-              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-teal-600 to-teal-800 font-[Space_Grotesk] text-sm font-bold text-white shadow-sm">
-                S
-              </div>
-              <div>
-                <p className="font-[Space_Grotesk] text-base font-bold leading-none text-slate-800">SODA</p>
-                <p className="text-[10px] uppercase tracking-wider text-slate-400">Data Quality Checker</p>
-              </div>
-            </Link>
-            <nav className="hidden items-center gap-1 md:flex">
-              {navItems.map((item) => (
-                <Link
-                  key={item.to}
-                  to={item.to}
-                  className={cn(
-                    'rounded-lg px-3 py-1.5 text-sm font-medium transition-colors duration-200',
-                    location.pathname === item.to
-                      ? 'bg-teal-50 text-teal-700'
-                      : 'text-slate-600 hover:bg-slate-100',
-                  )}
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </nav>
-          </div>
-          <div className="flex items-center gap-3">
-            <span className="hidden text-sm text-slate-500 sm:inline">{user?.name}</span>
-            <Button variant="secondary" size="sm" onClick={logout}>Logout</Button>
+    <div className="soda-grid-bg min-h-screen">
+      <header className="sticky top-0 z-50 border-b border-[#243049] bg-[#070b14]/90 backdrop-blur-md">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 md:px-6">
+          <Link to="/" className="transition-opacity hover:opacity-90">
+            <SodaLogo variant="header" />
+          </Link>
+
+          <nav className="hidden items-center gap-1 md:flex">
+            {navItems.map((item) => (
+              <Link
+                key={item.to}
+                to={item.to}
+                className={cn(
+                  'rounded-lg px-3 py-1.5 text-sm font-medium transition-colors',
+                  location.pathname === item.to
+                    ? 'bg-violet-600/20 text-violet-200'
+                    : 'text-[#8b9bb8] hover:text-white',
+                )}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+
+          <div className="flex items-center gap-2">
+            <span className="hidden text-sm text-[#8b9bb8] sm:inline">{user?.name}</span>
+            <button type="button" onClick={logout} className="hidden rounded-lg border border-[#243049] px-3 py-1.5 text-sm text-[#c8d2e8] hover:border-violet-500 md:inline-block">
+              Logout
+            </button>
+            <button type="button" className="rounded-lg border border-[#243049] px-2 py-1 text-[#c8d2e8] md:hidden" onClick={() => setMenuOpen(!menuOpen)} aria-label="Menu">
+              ☰
+            </button>
           </div>
         </div>
+
+        {menuOpen && (
+          <div className="border-t border-[#243049] px-4 py-3 md:hidden animate-fade-in">
+            {navItems.map((item) => (
+              <Link key={item.to} to={item.to} onClick={() => setMenuOpen(false)} className="block py-2 text-sm text-[#c8d2e8]">{item.label}</Link>
+            ))}
+            <button type="button" onClick={logout} className="mt-2 text-sm text-red-300">Logout</button>
+          </div>
+        )}
       </header>
-      <main className="mx-auto max-w-7xl px-4 py-6 md:px-6 md:py-8">{children}</main>
+
+      <main className="mx-auto max-w-6xl px-4 py-6 md:px-6 md:py-10">{children}</main>
     </div>
   )
 }

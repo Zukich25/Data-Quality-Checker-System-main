@@ -15,10 +15,10 @@ export function Button({
     <button
       className={cn(
         'inline-flex items-center justify-center rounded-lg font-semibold transition-all duration-200 disabled:opacity-60',
-        variant === 'primary' && 'bg-teal-700 text-white hover:bg-teal-800 shadow-sm hover:shadow',
-        variant === 'secondary' && 'border border-slate-200 bg-white text-slate-700 hover:border-teal-600 hover:text-teal-700',
-        variant === 'ghost' && 'text-slate-600 hover:bg-slate-100',
-        variant === 'danger' && 'border border-red-200 bg-white text-red-600 hover:bg-red-50',
+        variant === 'primary' && 'bg-gradient-to-r from-violet-600 to-violet-700 text-white hover:from-violet-500 hover:to-violet-600 shadow-sm',
+        variant === 'secondary' && 'border border-[#243049] bg-[#151d32] text-[#c8d2e8] hover:border-violet-500',
+        variant === 'ghost' && 'text-[#8b9bb8] hover:bg-[#151d32]',
+        variant === 'danger' && 'border border-red-500/30 bg-red-500/10 text-red-300 hover:bg-red-500/20',
         size === 'sm' && 'px-3 py-1.5 text-xs',
         size === 'md' && 'px-4 py-2 text-sm',
         size === 'lg' && 'px-5 py-2.5 text-base',

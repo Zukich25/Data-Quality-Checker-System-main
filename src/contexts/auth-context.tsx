@@ -1,11 +1,12 @@
 import { createContext, useContext, useMemo, useState } from 'react'
 import { clearAuth, getAuth, saveAuth, type AuthUser } from '@/lib/auth'
-import { login as loginRequest } from '@/api/authApi'
+import { login as loginRequest, register as registerRequest } from '@/api/authApi'
 
 type AuthContextValue = {
   user: AuthUser | null
   loading: boolean
   login: (email: string, password: string) => Promise<void>
+  register: (name: string, email: string, password: string) => Promise<void>
   logout: () => void
 }
 
@@ -20,6 +21,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     loading,
     async login(email, password) {
       const data = await loginRequest(email, password)
+      saveAuth(data.token, data.user)
+      setUser(data.user)
+    },
+    async register(name, email, password) {
+      const data = await registerRequest(name, email, password)
       saveAuth(data.token, data.user)
       setUser(data.user)
     },

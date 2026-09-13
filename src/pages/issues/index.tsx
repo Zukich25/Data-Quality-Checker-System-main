@@ -90,8 +90,8 @@ export default function IssuesPage() {
   return (
     <AppLayout>
       <Section
-        title="Issues CRUD"
-        description="Manage data quality issues via React + Axios and PHP + MySQL"
+        title="Issues"
+        description="Manage data quality issues"
         action={
           <Button onClick={() => { setEditingId(null); setForm(emptyIssueForm()); setShowForm(true) }}>
             Add Issue
@@ -100,13 +100,13 @@ export default function IssuesPage() {
       />
 
       {error && (
-        <div className="mb-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 animate-fade-in">{error}</div>
+        <div className="mb-4 rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-300 animate-fade-in">{error}</div>
       )}
 
       {showForm && (
         <Card className="mb-6 animate-fade-in-up">
           <CardHeader>
-            <h3 className="font-semibold">{editingId ? 'Update Issue' : 'Create Issue'}</h3>
+            <h3 className="font-semibold text-white">{editingId ? 'Update Issue' : 'Create Issue'}</h3>
           </CardHeader>
           <CardBody>
             <IssueForm

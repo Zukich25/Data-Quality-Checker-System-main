@@ -6,6 +6,7 @@ import { ProtectedRoute } from '@/components/common/protected-route'
 import { AuthProvider } from '@/contexts/auth-context'
 import HomePage from '@/pages/guest/home'
 import LoginPage from '@/pages/guest/login'
+import RegisterPage from '@/pages/guest/register'
 import IssuesPage from '@/pages/issues'
 
 createRoot(document.getElementById('root')!).render(
@@ -13,6 +14,7 @@ createRoot(document.getElementById('root')!).render(
     <AuthProvider>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
         <Route path="/" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
         <Route path="/issues" element={<ProtectedRoute><IssuesPage /></ProtectedRoute>} />
         <Route path="*" element={<Navigate to="/" replace />} />
